@@ -81,7 +81,7 @@ export class RegistrarComponent {
         this.showMsg = true;
         this.mensaje = "Error al encriptar nombre";
       });
-
+/*
       this.encriptarService.encriptar(this.nombre).subscribe(
       response => {
         console.log('Respuesta del servidor:', response);
@@ -89,10 +89,10 @@ export class RegistrarComponent {
       error => {
         console.error('Error al enviar el nombre:', error);
       }
-    );
+    );*/
     } else {
       this.showMsg = true;
-      this.mensaje = 'Por favor, completa el formulario correctamente.';
+      this.mensaje = 'Por favor, completa el campo correctamente.';
     }
   }
 

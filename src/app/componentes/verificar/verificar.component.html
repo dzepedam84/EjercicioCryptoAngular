@@ -1,1 +1,18 @@
-<p>verificar works!</p>
+<div class="row">
+    <div class="col-md-12">
+
+        <form class="m-3" [formGroup]="verificar">
+            <div class="col-8">
+                <textarea style="height: 210px;" class="form-control" formControlName="cadena"></textarea>
+            </div>
+            <!-- Botón -->
+            <button (click)="verificarCadena()" class="btn btn-primary m-3">Desencriptar</button> 
+            <!-- Mensaje -->            
+            <p class="text-danger" *ngIf="showMsg">{{mensaje}}</p>
+            <div *ngIf="showDesencriptado" class="row">
+                <h6>{{msgDesencriptado}}</h6>
+            </div>
+        </form>
+
+    </div>
+</div>
