@@ -4,9 +4,12 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormsModule  }
 import { EncriptarService } from '../../services/encriptar.service';
 
 /**
- * Clase texto texto
- * @implements {HttpInterceptor}
- *
+ * Componente para registrar un nombre y encriptarlo.
+ * 
+ * El usuario ingresar un nombre, 
+ * utilizar reconocimiento de voz para llenar el campo, 
+ * y encriptar el nombre ingresado.
+ * 
  * @author Daniel Zepeda <correo@gmail.com>
  */
 @Component({
@@ -16,21 +19,38 @@ import { EncriptarService } from '../../services/encriptar.service';
   styleUrl: './registrar.component.css'
 })
 export class RegistrarComponent {
-
+  /** Formulario para el registro */
   formulario!: FormGroup;
+  /** Nombre ingresado por el usuario */
   nombre!: string;
+  /** Mostrar un mensaje de error */
   showMsg: boolean = false;  
+  /** Mensaje de error a mostrar */
   mensaje: string = '';
+  /** Mostrar el nombre encriptado */
   showEncriptado: boolean = false;
+  /** Mensaje que contiene el nombre encriptado */
   msgEncriptado: string = '';
-  isListening: boolean = false; // Para controlar el estado del micrófono
+  /** Indica si el micrófono está activo */
+  isListening: boolean = false;
+  /** Objeto para el reconocimiento de voz */
   recognition: any;
+  /** Indica si se está utilizando la voz para llenar el campo */
   voz: boolean = false;
 
+  /**
+   * Crea una instancia de RegistrarComponent.
+   * 
+   * @param fb - FormBuilder para crear formularios.
+   * @param encriptarService - Servicio para encriptar nombres.
+   */
   constructor(private fb:FormBuilder, private encriptarService: EncriptarService){
     this.iniciar();
   }
 
+  /**
+   * Inicializa el formulario y configura el reconocimiento de voz.
+   */
   iniciar(){
     this.formulario = this.fb.group({
       nombre: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]*$'), Validators.maxLength(15)]]
@@ -55,6 +75,9 @@ export class RegistrarComponent {
 
   }  
 
+  /**
+   * Alterna el estado del micrófono para el reconocimiento de voz.
+   */
   toggleMicrofono() {
     if (this.isListening) {
       this.voz = false;
@@ -66,9 +89,15 @@ export class RegistrarComponent {
     this.isListening = !this.isListening; // Cambiar el estado    
   }
 
+  /**
+   * Registra el nombre ingresado y lo encripta.
+   * 
+   * Si el formulario es válido, se envía el nombre al servicio de encriptación.
+   * Muestra un mensaje de error si el formulario no es válido.
+   */
   registrar(){
     if (this.formulario.valid) {
-      // Procesar el formulario
+      
       console.log('Formulario válido:', this.formulario.value);
 
       this.encriptarService.encriptar( this.formulario.get('nombre')?.value )
@@ -81,15 +110,7 @@ export class RegistrarComponent {
         this.showMsg = true;
         this.mensaje = "Error al encriptar nombre";
       });
-/*
-      this.encriptarService.encriptar(this.nombre).subscribe(
-      response => {
-        console.log('Respuesta del servidor:', response);
-      },
-      error => {
-        console.error('Error al enviar el nombre:', error);
-      }
-    );*/
+
     } else {
       this.showMsg = true;
       this.mensaje = 'Por favor, completa el campo correctamente.';
