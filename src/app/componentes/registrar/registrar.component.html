@@ -1,32 +1,43 @@
-<div class="container-fluid vh-100 d-flex justify-content-center align-items-center bg-light-blue">
-    <div class="p-4 text-center" style="max-width: 400px; width: 100%; border-radius: 16px;">
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="container-fluid vh-100 d-flex justify-content-center align-items-center bg-light-blue">
+            <div class="p-4 text-center" style="border-radius: 16px;">
 
-        <!-- Imagen de bienvenida -->
-        <img src="/assets/bienvenida.png" class="mb-3" style="max-height: 150px;">
+                <!-- Imagen de bienvenida -->
+                <img src="/assets/bienvenida.png" class="mb-3" style="max-height: 150px;">
 
-        <!-- Título -->
-        <h3 class="fw-bold">¡Bienvenido!</h3>
-        <p class="text-muted">
-            Usa tu préstamo como dinero en efectivo o compra en donde quieras.
-        </p>
+                <!-- Título -->
+                <h3 class="fw-bold">¡Bienvenido!</h3>
+                <p class="text-muted">
+                    Usa tu préstamo como dinero en efectivo o compra en donde quieras.
+                </p>
 
-        <form class="m-3" [formGroup]="formulario">            
-            <!-- Campo de nombre -->
-            <div class="text-start mt-4">
-                <label class="form-label fw-semibold">¿Cómo prefieres que te llamemos?</label>
-                <input type="text"  maxlength="15" placeholder="Escribe tu nombre" class="form-control" formControlName="nombre">                
-                <small class="text-muted">{{ formulario.get('nombre')?.value?.length || 0 }}/15 caracteres</small>
+                <form class="m-3" [formGroup]="formulario">            
+                    <!-- Campo de nombre -->
+                    <div class="text-start mt-4">
+                        <label class="form-label fw-semibold">¿Cómo prefieres que te llamemos?</label>
+                        <input type="text"  maxlength="15" placeholder="Escribe tu nombre" class="form-control" formControlName="nombre">                
+                        <small class="text-muted">{{ formulario.get('nombre')?.value?.length || 0 }}/15 caracteres</small>
+                    </div>
+                    <button (click)="toggleMicrofono()" class="btn btn-light">                
+                            <div *ngIf="voz; else vozOff"><i class="fa-solid fa-microphone"></i></div>
+                            <ng-template #vozOff><i class="fa-solid fa-microphone-slash"></i></ng-template>                
+                    </button>
+                    <!-- Botón -->
+                    <button (click)="registrar()" class="btn btn-primary m-3">Comenzar</button>            
+
+                    <!-- Mensaje -->            
+                    <p class="text-danger" *ngIf="showMsg">{{mensaje}}</p>
+                    <div *ngIf="showEncriptado" class="row">
+                        <textarea style="height: 210px;">{{msgEncriptado}}</textarea>
+                    </div>                    
+                </form>
+
             </div>
-            <button (click)="toggleMicrofono()" class="btn btn-light">                
-                    <div *ngIf="voz; else vozOff"><i class="fa-solid fa-microphone"></i></div>
-                    <ng-template #vozOff><i class="fa-solid fa-microphone-slash"></i></ng-template>                
-            </button>
-            <!-- Botón -->
-             <button (click)="registrar()" class="btn btn-primary m-3">Comenzar</button>            
-
-            <!-- Mensaje -->            
-            <p class="text-danger" *ngIf="showMsg">{{mensaje}}</p>
-        </form>
-
+        </div>
     </div>
+    <div class="col-md-3"></div>
+    
 </div>
+
